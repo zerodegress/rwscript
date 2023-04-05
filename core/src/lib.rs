@@ -3,6 +3,8 @@
 pub mod parser;
 pub mod lexer;
 
+pub const NEWLINE: &'static str = "\n";
+
 pub fn add(left: usize, right: usize) -> usize {
     left + right
 }

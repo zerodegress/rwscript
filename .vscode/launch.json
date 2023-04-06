@@ -7,7 +7,21 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug unit tests in library 'rwscript_core'",
+            "name": "Debug all tests",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--all"
+                ]
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "core:Debug unit tests in library 'rwscript_core'",
             "cargo": {
                 "args": [
                     "test",
@@ -26,7 +40,7 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug integration test 'mod'",
+            "name": "core:Debug integration test 'mod'",
             "cargo": {
                 "args": [
                     "test",

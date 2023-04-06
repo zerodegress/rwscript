@@ -50,7 +50,7 @@ pub struct TraitLexer;
 impl Lexer for TraitLexer {
     fn lex<'a>(&mut self, text: &'a str, start: Position) -> anyhow::Result<(&'a str, Lex), LexError> {
         match regex_captures!(
-            r#"^(trait)(.*)$"#,
+            r#"^(trait)(.*)$"#s,
             text,
         ) {
             Some((_, trait_, rest)) => {
@@ -71,7 +71,7 @@ pub struct MutLexer;
 impl Lexer for MutLexer {
     fn lex<'a>(&mut self, text: &'a str, start: Position) -> anyhow::Result<(&'a str, Lex), LexError> {
         match regex_captures!(
-            r#"^(mut)(.*)$"#,
+            r#"^(mut)(.*)$"#s,
             text,
         ) {
             Some((_, mut_, rest)) => {
@@ -92,7 +92,7 @@ pub struct ConstLexer;
 impl Lexer for ConstLexer {
     fn lex<'a>(&mut self, text: &'a str, start: Position) -> anyhow::Result<(&'a str, Lex), LexError> {
         match regex_captures!(
-            r#"^(const)(.*)$"#,
+            r#"^(const)(.*)$"#s,
             text,
         ) {
             Some((_, const_, rest)) => {
@@ -113,7 +113,7 @@ pub struct ImportLexer;
 impl Lexer for ImportLexer {
     fn lex<'a>(&mut self, text: &'a str, start: Position) -> anyhow::Result<(&'a str, Lex), LexError> {
         match regex_captures!(
-            r#"^(import)(.*)$"#,
+            r#"^(import)(.*)$"#s,
             text,
         ) {
             Some((_, import, rest)) => {
@@ -134,7 +134,7 @@ pub struct ExportLexer;
 impl Lexer for ExportLexer {
     fn lex<'a>(&mut self, text: &'a str, start: Position) -> anyhow::Result<(&'a str, Lex), LexError> {
         match regex_captures!(
-            r#"^(export)(.*)$"#,
+            r#"^(export)(.*)$"#s,
             text,
         ) {
             Some((_, export, rest)) => {

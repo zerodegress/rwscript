@@ -8,7 +8,7 @@ pub struct NumberLexer;
 impl Lexer for NumberLexer {
     fn lex<'a>(&mut self, text: &'a str, start: Position) -> Result<(&'a str, Lex), LexError> {
         match regex_captures!(
-            r#"^((?:(?:[1-9][0-9]*)|[0-9])(?:\.[0-9]+)?)(.*)$"#,
+            r#"^((?:(?:[1-9][0-9]*)|[0-9])(?:\.[0-9]+)?)(.*)$"#s,
             text,
         ) {
             Some((_, num, rest)) => {
@@ -29,7 +29,7 @@ pub struct StringLexer;
 impl Lexer for StringLexer {
     fn lex<'a>(&mut self, text: &'a str, start: Position) -> anyhow::Result<(&'a str, Lex), LexError> {
         match regex_captures!(
-            r#"^("(?:.*[^\\])?")(.*)$"#,
+            r#"^("(?:.*[^\\])?")(.*)$"#s,
             text,
         ) {
             Some((_, string, rest)) => {
@@ -63,7 +63,7 @@ pub struct BooleanLexer;
 impl Lexer for BooleanLexer {
     fn lex<'a>(&mut self, text: &'a str, start: Position) -> anyhow::Result<(&'a str, Lex), LexError> {
         match regex_captures!(
-            r#"^((?:true)|(?:false))(.*)$"#,
+            r#"^((?:true)|(?:false))(.*)$"#s,
             text
         ) {
             Some((_, boolean, rest)) => {

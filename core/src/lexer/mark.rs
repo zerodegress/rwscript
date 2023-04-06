@@ -8,7 +8,7 @@ pub struct ParrenLeftLexer;
 impl Lexer for ParrenLeftLexer {
     fn lex<'a>(&mut self, text: &'a str, start: Position) -> Result<(&'a str, Lex), LexError> {
         match regex_captures!(
-            r#"^(\()(.*)$"#,
+            r#"^(\()(.*)$"#s,
             text,
         ) {
             Some((_, parren_left, rest)) => {
@@ -29,7 +29,7 @@ pub struct ParrenRightLexer;
 impl Lexer for ParrenRightLexer {
     fn lex<'a>(&mut self, text: &'a str, start: Position) -> Result<(&'a str, Lex), LexError> {
         match regex_captures!(
-            r#"^(\))(.*)$"#,
+            r#"^(\))(.*)$"#s,
             text,
         ) {
             Some((_, parren_right, rest)) => {
@@ -50,7 +50,7 @@ pub struct BraceLeftLexer;
 impl Lexer for BraceLeftLexer {
     fn lex<'a>(&mut self, text: &'a str, start: Position) -> Result<(&'a str, Lex), LexError> {
         match regex_captures!(
-            r#"^(\{)(.*)$"#,
+            r#"^(\{)(.*)$"#s,
             text,
         ) {
             Some((_, brace_left, rest)) => {
@@ -71,7 +71,7 @@ pub struct BraceRightLexer;
 impl Lexer for BraceRightLexer {
     fn lex<'a>(&mut self, text: &'a str, start: Position) -> Result<(&'a str, Lex), LexError> {
         match regex_captures!(
-            r#"^(\})(.*)$"#,
+            r#"^(\})(.*)$"#s,
             text,
         ) {
             Some((_, brace_right, rest)) => {
@@ -92,7 +92,7 @@ pub struct BracketLeftLexer;
 impl Lexer for BracketLeftLexer {
     fn lex<'a>(&mut self, text: &'a str, start: Position) -> Result<(&'a str, Lex), LexError> {
         match regex_captures!(
-            r#"^(\[)(.*)$"#,
+            r#"^(\[)(.*)$"#s,
             text,
         ) {
             Some((_, bracket_left, rest)) => {
@@ -113,7 +113,7 @@ pub struct BracketRightLexer;
 impl Lexer for BracketRightLexer {
     fn lex<'a>(&mut self, text: &'a str, start: Position) -> Result<(&'a str, Lex), LexError> {
         match regex_captures!(
-            r#"^(\])(.*)$"#,
+            r#"^(\])(.*)$"#s,
             text,
         ) {
             Some((_, bracket_right, rest)) => {

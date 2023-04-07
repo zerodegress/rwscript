@@ -2,7 +2,7 @@ use crate::lexer::general::RegexLexer;
 
 use super::Lexer;
 
-pub fn keyword_lexers() -> Vec<Box<dyn Lexer>> {
+pub fn mark_lexers() -> Vec<Box<dyn Lexer>> {
     vec![
         Box::new(RegexLexer::new("(", "parren_left").unwrap()),
         Box::new(RegexLexer::new(")", "parren_right").unwrap()),

@@ -7,6 +7,7 @@ use anyhow::Result;
 pub mod literal;
 pub mod keyword;
 pub mod mark;
+pub mod general;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Position {

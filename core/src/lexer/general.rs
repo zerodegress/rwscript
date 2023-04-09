@@ -32,7 +32,7 @@ impl Lexer for RegexLexer {
     fn lex<'a>(&mut self, text: &'a str, start: Position) -> Result<(&'a str, Lex), LexError> {
         match self.regex.captures(text) {
             Some(caps) => {
-                let (content, rest) = (caps.get(0).unwrap(), caps.get(1).unwrap());
+                let (content, rest) = (caps.get(1).unwrap(), caps.get(caps.len() - 1).unwrap());
                 Ok((
                     rest.as_str(),
                     Lex::new(&self.r#type, content.as_str(), range(content.as_str(), start)),

@@ -1,0 +1,73 @@
+Program ::= StatementSequence
+StatementSequence ::= StatementSequence Statement | Statement
+Statement ::= Expr
+Expr ::= BodyExpr | DeclareExpr | DefineExpr | OperationExpr
+BodyExpr ::= PlainBodyExpr | IfExpr | WhileExpr | DoWhileExpr | ForExpr | MatchExpr
+PlainBodyExpr ::= "{" StatementSequence "}"
+IfExpr ::= "if" Expr Statement ElseExpr
+ElseExpr ::= "else" IfExpr | "else" Statement | ""
+WhileExpr ::= "while" Expr Statement
+DoWhileExpr ::= "do" Expr Statement "while" Expr
+ForExpr ::= "for" DeclareExpr "in" Expr Statement
+DeclareExpr ::= "mut" Pattern | "const" Pattern | "ref" Pattern | "mutref" Pattern
+Pattern ::= StructPattern | TuplePattern | ArrayPattern | Identifier
+StructPattern ::= "{" IdentifierMap "}"
+IdentifierMap ::= IdentifierPair "," IdentifierMap | IdentifierPair "," | IdentifierPair | ""
+IdentifierPair ::= Identifier ":" Identifier
+TuplePattern ::= "(" IdentifierList ")"
+IdentifierList ::= Identifier "," IdentifierList | Identifier "," | Identifier | ""
+ArrayPattern ::= "[" IdentifierList "]"
+MatchExpr ::= "match" Expr "{" MatchMap "}"
+MatchMap ::= MatchMember "," MatchMap | MatchMember "," | MatchMember
+MatchMember ::= Pattern "=>" Expr
+DefineExpr ::= StructExpr | TupleExpr | ArrayExpr | TraitExpr | FunctionExpr | MethodExpr
+StructExpr ::= PlainStructExpr "override" OverrideExpr | PlainStructExpr
+PlainStructExpr ::= "struct" "{" StructMap "}"
+OverrideExpr ::= "{" OverrideMap "}"
+OverrideMap ::= OverrideMember "," OverrideMap | OverrideMember "," | OverrideMember | ""
+OverrideMember ::= Identifier "=>" "{" StructMap "}"
+StructMap ::= StructMember "," StructMap | StructMember "," | StructMember | ""
+StructMember ::= DeclareExpr ":" Value
+Value ::= Literal | Identifier
+Literal ::= StringLiteral | NumberLiteral | BooleanLiteral
+TupleExpr ::= "(" ValueList ")"
+ValueList ::= Value "," ValueList | Value "," | Value | ""
+ArrayExpr ::= "[" ValueList "]"
+TraitExpr ::= "trait" "{" TraitMap "}"
+TraitMap ::= TraitMember "," TraitMap | TraitMember "," | TraitMember | ""
+TraitMember ::= DeclareExpr ":" Identifier
+FunctionExpr ::= AsyncFunctionExpr | SyncFunctionExpr
+AsyncFunctionExpr ::= "async" SyncFunctionExpr
+SyncFunctionExpr ::= "func" CallableExpr
+CallableExpr ::= "(" FormParamList ")" ":" Identifier "->" Statement | "(" FormParamList ")" "->" Statement
+MethodExpr ::= AsyncMethodExpr | SyncMethodExpr
+AsyncMethodExpr ::= "async" SyncMethodExpr
+SyncMethodExpr ::= "method" CallableExpr
+FormParamList ::= FormParam "," FormParamList | FormParam "," | FormParam | ""
+FormParam ::= IdentifierPair | Identifier
+OperationExpr ::= AddExpr | SubExpr | MulExpr | DivExpr | ModExpr | PowExpr | AssignExpr | EqualExpr | NotEqualExpr | GreaterThanExpr | GreaterThanEqualExpr | LessThanExpr | LessEqualThanExpr | AndExpr | OrExpr | NotExpr | MemberExpr | CallExpr | IndexExpr | SliceExpr | ImportExpr | ExportExpr | AwaitExpr
+AddExpr ::= Expr "+" Expr
+SubExpr ::= Expr "-" Expr
+MulExpr ::= Expr "*" Expr
+DivExpr ::= Expr "/" Expr
+ModExpr ::= Expr "%" Expr
+PowExpr ::= Expr ** Expr
+AssignExpr ::= Expr "=" Expr
+EqualExpr ::= Expr "==" Expr
+NotEqualExpr ::= Expr "!=" Expr
+GreaterThanExpr ::= Expr ">" Expr
+LessThanExpr ::= Expr "<" Expr
+GreaterThanEqualExpr ::= Expr ">=" Expr
+LessEqualThanExpr ::= Expr "<=" Expr
+AndExpr ::= Expr "and" Expr
+OrExpr ::= Expr "or" Expr
+NotExpr ::= "not" Expr
+MemberExpr ::= Expr "." Identifier
+CallExpr ::= Expr "(" ParamList ")"
+ParamList ::= Param "," ParamList | Param "," | Param | ""
+Param ::= Identifier "=" Expr | Expr
+IndexExpr ::= Expr "[" Expr "]"
+SliceExpr ::= Expr ".." Expr
+ImportExpr ::= "import" StringLiteral
+ExportExpr ::= "export" Expr
+AwaitExpr ::= "await" Expr

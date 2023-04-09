@@ -1,5 +1,5 @@
 use std::fmt::Display;
-use crate::NEWLINE;
+use crate::{NEWLINE, lexer::{literal::literal_lexers, keyword::keyword_lexers, mark::mark_lexers, general::RegexLexer, special::special_lexers}};
 
 // TODO:实现分词器
 use anyhow::Result;
@@ -8,6 +8,7 @@ pub mod literal;
 pub mod keyword;
 pub mod mark;
 pub mod general;
+pub mod special;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Position {
@@ -108,5 +109,45 @@ impl Display for LexError {
             self.expected, 
             self.found
         )
+    }
+}
+
+impl std::error::Error for LexError {
+}
+
+pub fn lex(text: &str) -> Result<Vec<Lex>, LexError> {
+    let mut lexers = Vec::new();
+    lexers.append(&mut special_lexers());
+    lexers.append(&mut literal_lexers());
+    lexers.append(&mut keyword_lexers());
+    lexers.append(&mut mark_lexers());
+    lexers.push(Box::new(RegexLexer::new(r"\S+", "identifier").unwrap()));
+
+    let mut text = text.to_string();
+    let mut start = Position::new(1, 1);
+    let mut error = None;
+    let mut lexs = Vec::new();
+    loop {
+        let mut flag = false;
+        for lexer in &mut lexers {
+            match lexer.lex(&text, start) {
+                Ok((rest, lex)) => {
+                    text = rest.to_string();
+                    let (_, next_start) = lex.range;
+                    start = next_start;
+                    flag = true;
+                    lexs.push(lex);
+                    break;
+                }
+                Err(err) => {
+                    error = Some(err);
+                }
+            }
+        }
+        if !flag {
+            return Err(error.unwrap())
+        } else if text.is_empty() {
+            return Ok(lexs);
+        }
     }
 }
